@@ -33,7 +33,57 @@ app.use(cors({
         return callback(null, true);
     }
 })); 
+// --- NEW: AUTHENTICATION ROUTE ---
 
+// POST /api/login: User login endpoint
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const result = await pool.query('SELECT id, username, password, role FROM users WHERE username = $1', [username]);
+        const user = result.rows[0];
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+        
+        // CRITICAL NOTE: Simple string comparison (for now)
+        if (user.password !== password) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+        
+        // Success: Return basic user data
+        res.json({ id: user.id, username: user.username, role: user.role });
+
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Server error during login' });
+    }
+});
+// POST /api/users: Admin creates a new user (with default 'admin' role)
+app.post('/api/users', async (req, res) => {
+    // NOTE: In a real app, this should be protected by a middleware checking for role === 'admin'
+    const { username, password } = req.body; 
+    const role = 'admin'; // Default role as requested
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required.' });
+    }
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role',
+            [username, password, role]
+        );
+        res.status(201).json(result.rows[0]);
+
+    } catch (err) {
+        if (err.code === '23505') { // Unique violation
+            return res.status(409).json({ error: 'Username already exists.' });
+        }
+        console.error('User creation error:', err);
+        res.status(500).json({ error: 'Server error during user creation.' });
+    }
+});
 // --- 2. DATABASE CONNECTION (NEON) ---
 // Render automatically injects DATABASE_URL from environment variables
 const pool = new Pool({
