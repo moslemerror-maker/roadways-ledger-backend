@@ -10,7 +10,7 @@ const app = express();
 
 // --- 1. MIDDLEWARE & CONFIGURATION ---
 
-// Set the allowed frontend origins (MUST be updated with your actual GitHub Pages URL)
+
 const allowedOrigins = [
     'https://moslemerror-maker.github.io', 
     'https://moslemerror-maker.github.io/roadways-ledger-frontend/', // Example GitHub Pages URL
