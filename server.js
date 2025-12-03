@@ -13,7 +13,7 @@ const app = express();
 // Set the allowed frontend origins (MUST be updated with your actual GitHub Pages URL)
 const allowedOrigins = [
     'https://moslemerror-maker.github.io', 
-    'https://roadways-ledger-frontend-xxxx.github.io', // Example GitHub Pages URL
+    'https://moslemerror-maker.github.io/roadways-ledger-frontend/', // Example GitHub Pages URL
     'https://roadways.bestcement.co.in'    // Example Custom Domain
 ];
 
