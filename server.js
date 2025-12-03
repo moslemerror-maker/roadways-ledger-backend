@@ -14,6 +14,7 @@ const app = express();
 const allowedOrigins = [
     'https://moslemerror-maker.github.io', 
     'https://moslemerror-maker.github.io/roadways-ledger-frontend/', // Example GitHub Pages URL
+    'https://moslemerror-maker.github.io/roadways-ledger-frontend',
     'https://roadways-ledger-backend.onrender.com'    // Example Custom Domain
 ];
 
