@@ -14,7 +14,7 @@ const app = express();
 const allowedOrigins = [
     'https://moslemerror-maker.github.io', 
     'https://moslemerror-maker.github.io/roadways-ledger-frontend/', // Example GitHub Pages URL
-    'https://roadways.bestcement.co.in'    // Example Custom Domain
+    'https://roadways-ledger-backend.onrender.com'    // Example Custom Domain
 ];
 
 app.use(express.json()); // To parse JSON bodies from frontend requests
