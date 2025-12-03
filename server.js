@@ -20,19 +20,11 @@ const allowedOrigins = [
 app.use(express.json()); // To parse JSON bodies from frontend requests
 
 // Configure CORS for security
-app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or local requests)
-        if (!origin) return callback(null, true);
-        
-        // Check if the origin is in the allowed list
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    }
-})); 
+// server.js (Temporary universal CORS setting)
+app.use(cors()); 
+
+// Optionally, if the above fails, use a direct configuration:
+// app.use(cors({ origin: '*' }));
 // --- NEW: AUTHENTICATION ROUTE ---
 
 // POST /api/login: User login endpoint
